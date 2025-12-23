@@ -1,0 +1,35 @@
+class PersonCl{
+    constructor(firstName, birthYear){
+        this.firstName = firstName
+        this.birthYear = birthYear
+
+    }
+
+    calcAge(){
+        console.log(2037 - this.birthYear)
+    }
+
+    static hey(){
+        console.log('Hey there')
+    }
+}
+
+class StudentCl extends PersonCl{
+    constructor(fullName, birthYear, course){
+        // Always need to happen first
+        super(fullName, birthYear)
+        this.course = course
+    }
+
+    introduce(){
+        console.log(`My name is ${this.firstName} and I study ${this.course}`)
+    }
+
+    calcAge () {
+        console.log(`I'am ${2037 - this.birthYear} years old, but as a student I feel more like ${2037- this.birthYear+10}`)
+    }
+}
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science')
+martha.introduce()
+martha.calcAge()
