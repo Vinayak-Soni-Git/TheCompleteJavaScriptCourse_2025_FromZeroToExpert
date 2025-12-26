@@ -23,7 +23,12 @@ console.log([...commonFoods])
 const italianMexicanFusion = italianFoods.union(mexicanFoods)
 console.log(italianMexicanFusion)
 
-console.log([...new Set([...italianFoods, ...mexicanFoods])])
+console.log([
+    ...new Set([
+        ...italianFoods,
+        ...mexicanFoods
+    ])
+])
 
 const uniqueItalianFoods = italianFoods.difference(mexicanFoods)
 console.log(uniqueItalianFoods)
