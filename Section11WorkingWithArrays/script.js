@@ -1,23 +1,72 @@
 'use strict'
 
 const account1 = {
-    owner: 'Jonas Schmedtmann', movements: [200, 450, -400, 3000, -650, -130, 70, 1300], interestRate: 1.2, // %
+    owner: 'Jonas Schmedtmann',
+    movements: [
+        200,
+        450,
+        -400,
+        3000,
+        -650,
+        -130,
+        70,
+        1300
+    ],
+    interestRate: 1.2, // %
     pin: 1111,
 }
 
 const account2 = {
-    owner: 'Jessica Davis', movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30], interestRate: 1.5, pin: 2222,
+    owner: 'Jessica Davis',
+    movements: [
+        5000,
+        3400,
+        -150,
+        -790,
+        -3210,
+        -1000,
+        8500,
+        -30
+    ],
+    interestRate: 1.5,
+    pin: 2222,
 }
 
 const account3 = {
-    owner: 'Steven Thomas Williams', movements: [200, -200, 340, -300, -20, 50, 400, -460], interestRate: 0.7, pin: 3333,
+    owner: 'Steven Thomas Williams',
+    movements: [
+        200,
+        -200,
+        340,
+        -300,
+        -20,
+        50,
+        400,
+        -460
+    ],
+    interestRate: 0.7,
+    pin: 3333,
 }
 
 const account4 = {
-    owner: 'Sarah Smith', movements: [430, 1000, 700, 50, 90], interestRate: 1, pin: 4444,
+    owner: 'Sarah Smith',
+    movements: [
+        430,
+        1000,
+        700,
+        50,
+        90
+    ],
+    interestRate: 1,
+    pin: 4444,
 }
 
-const accounts = [account1, account2, account3, account4]
+const accounts = [
+    account1,
+    account2,
+    account3,
+    account4
+]
 
 // Elements
 const labelWelcome = document.querySelector('.welcome')
@@ -45,12 +94,26 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount')
 const inputCloseUsername = document.querySelector('.form__input--user')
 const inputClosePin = document.querySelector('.form__input--pin')
 
-const currencies = new Map([['USD', 'United States dollar'], ['EUR', 'Euro'], ['GBP', 'Pound sterling'],])
+const currencies = new Map([
+    [
+        'USD',
+        'United States dollar'
+    ],
+    [
+        'EUR',
+        'Euro'
+    ],
+    [
+        'GBP',
+        'Pound sterling'
+    ],
+])
 
 const displayMovements = function (movements, sort = false) {
     containerMovements.innerHTML = ''
 
-    const movs = sort ? movements.slice().sort((a, b)=> a-b ) : movements
+    const movs = sort ? movements.slice()
+        .sort((a, b) => a - b) : movements
     movs.forEach(function (mov, i) {
         const type = mov > 0 ? 'deposit' : 'withdrawal'
 
@@ -66,7 +129,10 @@ displayMovements(account1.movements)
 
 const createUserName = function (accounts) {
     accounts.forEach(function (acc) {
-        acc.username = acc.owner.toLowerCase().split(' ').map(name => name[0]).join('')
+        acc.username = acc.owner.toLowerCase()
+            .split(' ')
+            .map(name => name[0])
+            .join('')
     })
 }
 
@@ -89,12 +155,17 @@ const updateUI = function (currentAccount) {
 }
 
 const calcDisplaySummary = function (movements) {
-    const income = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
+    const income = movements.filter(mov => mov > 0)
+        .reduce((acc, mov) => acc + mov, 0)
     labelSumIn.textContent = `${income} EUR`
-    const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0)
+    const out = movements.filter(mov => mov < 0)
+        .reduce((acc, mov) => acc + mov, 0)
     labelSumOut.textContent = `${Math.abs(out)} EUR`
 
-    const interest = movements.filter(mov => mov > 0).map(deposit => deposit * 1.2 / 100).filter((interest, i, arr) => interest >= 1).reduce((acc, interest) => acc + interest, 0)
+    const interest = movements.filter(mov => mov > 0)
+        .map(deposit => deposit * 1.2 / 100)
+        .filter((interest, i, arr) => interest >= 1)
+        .reduce((acc, interest) => acc + interest, 0)
     labelSumInterest.textContent = `${interest} EUR`
 }
 
@@ -127,10 +198,10 @@ btnTransfer.addEventListener('click', function (e) {
     }
 })
 
-btnLoan.addEventListener('click', function(e){
+btnLoan.addEventListener('click', function (e) {
     e.preventDefault()
     const amount = Number(inputLoanAmount.value)
-    if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)){
+    if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
         currentAccount.push(amount)
         updateUI(currentAccount)
     }
@@ -149,7 +220,7 @@ btnClose.addEventListener('click', function (e) {
 
 let sorted = false
 
-btnSort.addEventListener('click', function(e){
+btnSort.addEventListener('click', function (e) {
     e.preventDefault()
     displayMovements(currentAccount.movements, !sorted)
     sorted = !sorted
